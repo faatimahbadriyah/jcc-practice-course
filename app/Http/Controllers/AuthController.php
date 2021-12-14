@@ -30,4 +30,28 @@ class AuthController extends Controller
         $data['data'] = auth()->user();
         return response()->json($data, 200);
     }
+
+    public function logout()
+    {
+        $data['data'] = [];
+        try {
+            auth()->logout();
+            $data['message'] = 'logout berhasil: session dihapus';
+            return response()->json($data, 200);
+        } catch (\Throwable $th) {
+            $data['message'] = $th->getMessage();
+            return response()->json($data, 400);
+        }
+    }
+
+    public function user()
+    {
+        try {
+            $data = auth()->aku();
+            return response()->json($data, 200);
+        } catch (\Throwable $th) {
+            $data['message'] = $th->getMessage();
+            return response()->json($data, 400);
+        }
+    }
 }
