@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Hash;
 use Illuminate\Http\Request;
+use Log;
 
 class AuthController extends Controller
 {
@@ -17,17 +18,20 @@ class AuthController extends Controller
         ];
         if (is_null($user)) {
             $data['message'] = 'login gagal: user tidak ditemukan';
+            Log::error($data['message'], ['data' => $request['email']]);
             return response()->json($data, 400);
         }
 
         if (!Hash::check($request['password'], $user->password)) {
             $data['message'] = 'login gagal: password salah';
+            Log::error($data['message'], ['data' => $request['email']]);
             return response()->json($data, 400);
         }
 
         auth()->login($user);
 
         $data['data'] = auth()->user();
+        Log::error($data['message'], $data['data']);
         return response()->json($data, 200);
     }
 
