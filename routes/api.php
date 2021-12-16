@@ -19,3 +19,4 @@ Route::get('/', function () {
 Route::post('login', [App\Http\Controllers\AuthController::class, 'login']);
 Route::post('logout', [App\Http\Controllers\AuthController::class, 'logout']);
 Route::get('user', [App\Http\Controllers\AuthController::class, 'user']);
+Route::get('sms', [App\Http\Controllers\SmsController::class, 'sms']);
